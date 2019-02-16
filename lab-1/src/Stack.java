@@ -46,7 +46,4 @@ public class Stack {
             System.out.println(array[counter]);
         }
     }
-
-
-
 }
