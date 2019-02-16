@@ -32,16 +32,16 @@ public class Lab {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Stack stack = new Stack(5);
-        stack.addElement(input.nextInt());
-        stack.addElement(input.nextInt());
-        stack.addElement(input.nextInt());
-        stack.addElement(input.nextInt());
-        stack.addElement(input.nextInt());
+        stack.push(input.nextInt());
+        stack.push(input.nextInt());
+        stack.push(input.nextInt());
+        stack.push(input.nextInt());
+        stack.push(input.nextInt());
 
         stack.printStack(stack.stackArray);
-
-        replaceElements(findMax(stack.stackArray), findMin(stack.stackArray), stack.stackArray);
-
+        if(!stack.isEmpty()) {
+            replaceElements(findMax(stack.stackArray), findMin(stack.stackArray), stack.stackArray);
+        } else System.out.println();
         stack.printStack(stack.stackArray);
     }
 

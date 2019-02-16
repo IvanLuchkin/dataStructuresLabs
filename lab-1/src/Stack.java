@@ -10,20 +10,31 @@ public class Stack {
 
     }
 
-    public void addElement (int element) {
+    public void push(int element) {
         stackArray[++top] = element;
     }
 
-    public int deleteElement () {
+    public int pop() {
         return stackArray[top--];
     }
 
-    public int readTop() {
+    public int top() {
         return stackArray[top];
     }
 
+    public int[] clear() {
+        stackArray = new int[0];
+        top = -1;
+        return stackArray;
+    }
+
+    public int size() {
+        int temp = top + 1;
+        return temp;
+    }
+
     public boolean isEmpty() {
-        return (top == -1);
+        return (top == - 1);
     }
 
     public boolean isFull() {
