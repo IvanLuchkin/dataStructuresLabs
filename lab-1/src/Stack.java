@@ -37,10 +37,6 @@ public class Stack {
         return (top == - 1);
     }
 
-    public boolean isFull() {
-        return (top == mSize -1);
-    }
-
     public void printStack(int array[]) {
         for (int counter = 0; counter < array.length; counter++) {
             System.out.println(array[counter]);

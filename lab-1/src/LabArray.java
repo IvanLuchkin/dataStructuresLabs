@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Lab {
+public class LabArray {
 
     public static int findMax(int[] array){
         int indexMax = 0;
