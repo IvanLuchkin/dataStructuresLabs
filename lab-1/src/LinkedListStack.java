@@ -43,4 +43,22 @@ public class LinkedListStack {
         return (top == null);
     }
 
+    public LinkedListStack refresh(LinkedListStack stack) {
+        LinkedListStack temp = new LinkedListStack();
+        while (!stack.isEmpty()) {
+            temp.push(stack.pop());
+        }
+        stack = temp;
+        return stack;
+    }
+
+    public void printStack(LinkedListStack stack) {
+        LinkedListStack temp = new LinkedListStack();
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+            System.out.println(node.value);
+            temp.push(node);
+        }
+        stack = temp.refresh(temp);
+    }
 }

@@ -1,47 +1,44 @@
 public class LabLinkedList {
 
-   public static Node findMax(LinkedListStack stack) {
-       LinkedListStack stackTemp = stack;
-       System.out.println(stackTemp.top == null);
-       Node max = new Node(0);
-       while (stackTemp.top != null) {
-           if(stackTemp.top.value >= max.value) {
-               max.value = stackTemp.top.value;
-           }
-           stackTemp.pop();
-       }
-       System.out.println(max.value);
-       return max;
-   }
+   public static void replaceMinMax(LinkedListStack stack) {
+       LinkedListStack temp = new LinkedListStack();
+       Node max = stack.top();
+       Node min = stack.top();
 
-   public static Node findMin(LinkedListStack stack) {
-       LinkedListStack stackTemp = stack;
-       Node min = stackTemp.top;
-       System.out.println(stackTemp.top.value);
-       while (stackTemp.top != null) {
-           if(stackTemp.top.value <= min.value) {
-               min.value = stackTemp.top.value;
+       while(!stack.isEmpty()) {
+           Node node = stack.pop();
+           if (node.value > max.value) {
+               max = node;
            }
-           stackTemp.pop();
+           if (node.value < min.value) {
+               min = node;
+           }
+           temp.push(node);
        }
-       System.out.println(min.value);
-       return min;
+
+       while(!temp.isEmpty()) {
+           Node node = temp.pop();
+
+           if (node == max) {
+               stack.push(min);
+           } else if (node == min) {
+               stack.push(max);
+           } else {
+               stack.push(node);
+           }
+       }
    }
 
     public static void main(String[] args) {
         LinkedListStack listStack = new LinkedListStack();
-        listStack.push(new Node(10));
-        listStack.push(new Node(20));
-        listStack.push(new Node(30));
-        listStack.push(new Node(70));
-        listStack.push(new Node(15));
+        listStack.push(new Node(10)); //15
+        listStack.push(new Node(20)); //10
+        listStack.push(new Node(30)); //30
+        listStack.push(new Node(70)); //20
+        listStack.push(new Node(15)); //70
 
-
-
-        findMin(listStack);
-        findMax(listStack);
-
-
+        replaceMinMax(listStack);
+        listStack.printStack(listStack);
     }
 
 }
