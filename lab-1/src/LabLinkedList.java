@@ -13,18 +13,18 @@ public class LabLinkedList {
            if (node.value < min.value) {
                min = node;
            }
-           temp.push(node);
+           temp.push(new Node(node.value));
        }
 
        while(!temp.isEmpty()) {
            Node node = temp.pop();
 
-           if (node == max) {
-               stack.push(min);
-           } else if (node == min) {
-               stack.push(max);
+           if (node.value == max.value) {
+               stack.push(new Node(min.value));
+           } else if (node.value == min.value) {
+               stack.push(new Node(max.value));
            } else {
-               stack.push(node);
+               stack.push(new Node(node.value));
            }
        }
    }
