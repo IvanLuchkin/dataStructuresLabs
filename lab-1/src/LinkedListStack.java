@@ -1,9 +1,9 @@
 public class LinkedListStack {
-    Node top = null;
-    int size = 1;
+    private Node top = null;
+    private int size = 1;
 
-    public void push(Object node) {
-        if (node == null || !(node instanceof Node)){
+    void push(Object node) {
+        if (!(node instanceof Node)){
             return;
         } else {
             Node newNode = (Node)node;
@@ -13,7 +13,7 @@ public class LinkedListStack {
         }
     }
 
-    public Node pop() {
+    Node pop() {
         if(top != null) {
             Node proxyTop = top;
             top = top.next;
@@ -22,17 +22,17 @@ public class LinkedListStack {
         } else return null;
     }
 
-    public Node top() {
+    Node top() {
         return top;
     }
 
-    public void clear() {
+    void clear() {
         while(top != null) {
             this.pop();
         }
     }
 
-    public int size() {
+    private int size() {
         if (top == null) {
             return 0;
         } else {
@@ -40,29 +40,29 @@ public class LinkedListStack {
         }
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return (top == null);
     }
 
-    public LinkedListStack refresh(LinkedListStack stack) {
+    private LinkedListStack refresh(LinkedListStack stack) {
         LinkedListStack temp = new LinkedListStack();
-        while (!stack.isEmpty()) {
+        while (stack.isEmpty()) {
             temp.push(stack.pop());
         }
         stack = temp;
         return stack;
     }
 
-    public LinkedListStack randPush(LinkedListStack stack, int size, int a, int b) { // [a; b]
+    LinkedListStack randPush(LinkedListStack stack, int size, int a, int b) { // [a; b]
         while (stack.size() <= size) {
             stack.push(new Node((int)(Math.random() * (b - a) + a)));
         }
         return stack;
     }
 
-    public void printStack(LinkedListStack stack) {
+    void printStack(LinkedListStack stack) {
         LinkedListStack temp = new LinkedListStack();
-        while (!stack.isEmpty()) {
+        while (stack.isEmpty()) {
             Node node = stack.pop();
             System.out.println(node.value);
             temp.push(node);
