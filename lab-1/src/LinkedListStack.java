@@ -1,6 +1,7 @@
 public class LinkedListStack {
     Node top = null;
     int size = 1;
+
     public void push(Object node) {
         if (node == null || !(node instanceof Node)){
             return;
@@ -49,6 +50,13 @@ public class LinkedListStack {
             temp.push(stack.pop());
         }
         stack = temp;
+        return stack;
+    }
+
+    public LinkedListStack randPush(LinkedListStack stack, int size, int a, int b) { // [a; b]
+        while (stack.size() <= size) {
+            stack.push(new Node((int)(Math.random() * (b - a) + a)));
+        }
         return stack;
     }
 
