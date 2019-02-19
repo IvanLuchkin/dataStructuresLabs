@@ -46,7 +46,7 @@ public class LinkedListStack {
 
     private LinkedListStack refresh(LinkedListStack stack) {
         LinkedListStack temp = new LinkedListStack();
-        while (stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             temp.push(stack.pop());
         }
         stack = temp;
@@ -62,7 +62,7 @@ public class LinkedListStack {
 
     void printStack(LinkedListStack stack) {
         LinkedListStack temp = new LinkedListStack();
-        while (stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             Node node = stack.pop();
             System.out.println(node.value);
             temp.push(node);
