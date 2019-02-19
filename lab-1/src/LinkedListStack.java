@@ -11,7 +11,7 @@ public class LinkedListStack {
             top = newNode;
             size++;
         }
-    }
+    } // Add element to the top
 
     Node pop() {
         if(top != null) {
@@ -20,17 +20,17 @@ public class LinkedListStack {
             size--;
             return proxyTop;
         } else return null;
-    }
+    } // Remove element from the top and read (return) it
 
     Node top() {
         return top;
-    }
+    } // Read (return) element from the top
 
     void clear() {
         while(top != null) {
             this.pop();
         }
-    }
+    } // Remove all elements in stack
 
     private int size() {
         if (top == null) {
@@ -38,9 +38,9 @@ public class LinkedListStack {
         } else {
             return size;
         }
-    }
+    } // Return amount of elements in the stack
 
-    boolean isEmpty() {
+    boolean isEmpty() { // Check if stack is empty
         return (top == null);
     }
 
@@ -51,16 +51,17 @@ public class LinkedListStack {
         }
         stack = temp;
         return stack;
-    }
+    } // Turn stack upside down
 
     LinkedListStack randPush(LinkedListStack stack, int size, int a, int b) { // [a; b]
         while (stack.size() <= size) {
             stack.push(new Node((int)(Math.random() * (b - a) + a)));
         }
         return stack;
-    }
-
-    void printStack(LinkedListStack stack) {
+    } /* Fill stack with Nodes
+                                                                                     with random values [a; b]
+                                                                                  */
+    void printStack(LinkedListStack stack) { // To print values of all objects in stack
         LinkedListStack temp = new LinkedListStack();
         while (!stack.isEmpty()) {
             Node node = stack.pop();
