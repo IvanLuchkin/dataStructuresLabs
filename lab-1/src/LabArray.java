@@ -33,9 +33,9 @@ public class LabArray {
         Scanner input = new Scanner(System.in);
         Stack stack = new Stack(5);
 
-        stack.push(1);
-        stack.push(15);
-        stack.push(8);
+        stack.push(input.nextInt());
+        stack.push(input.nextInt());
+        stack.push(input.nextInt());
 
         stack.printStack(stack.stackArray);
         if(!stack.isEmpty()) {

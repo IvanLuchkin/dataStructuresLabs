@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class LabLinkedList {
 
    public static void replaceMinMax(LinkedListStack stack) {
@@ -31,14 +33,26 @@ public class LabLinkedList {
 
     public static void main(String[] args) { // Testing
         LinkedListStack listStack = new LinkedListStack();
-        listStack.push(new Node(10)); //15
-        listStack.push(new Node(20)); //10
-        listStack.push(new Node(30)); //30
-        listStack.push(new Node(70)); //20
-        listStack.push(new Node(15)); //70
+        Scanner input = new Scanner(System.in);
 
+        listStack.push(new Node(10)); //15
+        listStack.push(new Node(15)); //10
+        listStack.push(new Node(20)); //30
+        listStack.push(new Node(30)); //20
+        listStack.push(new Node(70)); //70
+
+       /* listStack.push(new Node(input.nextInt())); //15
+        listStack.push(new Node(input.nextInt())); //10
+        listStack.push(new Node(input.nextInt())); //30
+        listStack.push(new Node(input.nextInt())); //20
+        listStack.push(new Node(input.nextInt())); //70 */
+
+
+        listStack = listStack.printStack(listStack);
         replaceMinMax(listStack);
         listStack.printStack(listStack);
+
+        input.close();
     }
 
 }

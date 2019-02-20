@@ -22,8 +22,10 @@ public class Stack {
     public int pop() {
         if (this.isEmpty()) {
             System.out.println("The stack is empty");
+            return 0;
+        }else {
+            return stackArray[top--];
         }
-        return stackArray[top--];
     }
 
     public int top() {
@@ -57,6 +59,12 @@ public class Stack {
     public void printStack(int array[]) {
         for (int counter = 0; counter < array.length; counter++) {
             System.out.println(array[counter]);
+        }
+    }
+
+    public void randPush(int a, int b) {
+        while(!this.isFull()) {
+            this.push((int)(Math.random() * (b - a) + a));
         }
     }
 }

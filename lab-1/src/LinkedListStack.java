@@ -62,13 +62,14 @@ public class LinkedListStack {
         return stack;
     } // Turn stack upside down
 
-    void printStack(LinkedListStack stack) { // To print values of all objects in stack
+    LinkedListStack printStack(LinkedListStack stack) { // To print values of all objects in stack
         LinkedListStack temp = new LinkedListStack();
         while (!stack.isEmpty()) {
             Node node = stack.pop();
             System.out.println(node.value);
             temp.push(node);
         }
-        stack = temp.refresh(temp);
+        System.out.println();
+        return stack = temp.refresh(temp);
     }
 }
