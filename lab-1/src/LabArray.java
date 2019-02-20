@@ -31,13 +31,13 @@ public class LabArray {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        Stack stack = new Stack(5);
+        System.out.println("Enter the size of the stack");
+        Stack stack = new Stack(input.nextInt());
 
-        stack.push(input.nextInt());
-        stack.push(input.nextInt());
-        stack.push(input.nextInt());
+        stack.randPush(1,20);
 
         stack.printStack(stack.stackArray);
+        System.out.println();
         if(!stack.isEmpty()) {
             replaceElements(findMax(stack.stackArray), findMin(stack.stackArray), stack.stackArray);
         } else System.out.println();

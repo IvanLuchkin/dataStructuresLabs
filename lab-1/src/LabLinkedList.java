@@ -34,19 +34,9 @@ public class LabLinkedList {
     public static void main(String[] args) { // Testing
         LinkedListStack listStack = new LinkedListStack();
         Scanner input = new Scanner(System.in);
+        int size = input.nextInt();
 
-        listStack.push(new Node(10)); //15
-        listStack.push(new Node(15)); //10
-        listStack.push(new Node(20)); //30
-        listStack.push(new Node(30)); //20
-        listStack.push(new Node(70)); //70
-
-       /* listStack.push(new Node(input.nextInt())); //15
-        listStack.push(new Node(input.nextInt())); //10
-        listStack.push(new Node(input.nextInt())); //30
-        listStack.push(new Node(input.nextInt())); //20
-        listStack.push(new Node(input.nextInt())); //70 */
-
+        listStack.randPush(listStack, size, 1, 20);
 
         listStack = listStack.printStack(listStack);
         replaceMinMax(listStack);
