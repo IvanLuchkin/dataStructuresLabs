@@ -11,10 +11,18 @@ public class Stack {
     }
 
     public void push(int element) {
-        stackArray[++top] = element;
+        if(this.isFull()){
+            System.out.println("The stack is full, unable to push");
+            return;
+        } else {
+            stackArray[++top] = element;
+        }
     }
 
     public int pop() {
+        if (this.isEmpty()) {
+            System.out.println("The stack is empty");
+        }
         return stackArray[top--];
     }
 
@@ -23,9 +31,14 @@ public class Stack {
     }
 
     public int[] clear() {
-        stackArray = new int[0];
-        top = -1;
-        return stackArray;
+        if(this.isEmpty()) {
+            System.out.println("The stack is empty");
+            return stackArray;
+        }else {
+            stackArray = new int[0];
+            top = -1;
+            return stackArray;
+        }
     }
 
     public int size() {
@@ -35,6 +48,10 @@ public class Stack {
 
     public boolean isEmpty() {
         return (top == - 1);
+    }
+
+    public boolean isFull() {
+        return (top == mSize - 1);
     }
 
     public void printStack(int array[]) {

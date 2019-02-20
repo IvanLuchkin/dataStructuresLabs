@@ -44,6 +44,15 @@ public class LinkedListStack {
         return (top == null);
     }
 
+    LinkedListStack randPush(LinkedListStack stack, int size, int a, int b) { // [a; b]
+        while (stack.size() <= size) {
+            stack.push(new Node((int)(Math.random() * (b - a) + a)));
+        }
+        return stack;
+    }                                                                             /* Fill stack with Nodes
+                                                                                     with random values [a; b]
+                                                                                  */
+
     private LinkedListStack refresh(LinkedListStack stack) {
         LinkedListStack temp = new LinkedListStack();
         while (!stack.isEmpty()) {
@@ -53,14 +62,6 @@ public class LinkedListStack {
         return stack;
     } // Turn stack upside down
 
-    LinkedListStack randPush(LinkedListStack stack, int size, int a, int b) { // [a; b]
-        while (stack.size() <= size) {
-            stack.push(new Node((int)(Math.random() * (b - a) + a)));
-        }
-        return stack;
-    } /* Fill stack with Nodes
-                                                                                     with random values [a; b]
-                                                                                  */
     void printStack(LinkedListStack stack) { // To print values of all objects in stack
         LinkedListStack temp = new LinkedListStack();
         while (!stack.isEmpty()) {
