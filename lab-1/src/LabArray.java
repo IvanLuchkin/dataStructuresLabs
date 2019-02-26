@@ -33,8 +33,12 @@ public class LabArray {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the size of the stack");
         Stack stack = new Stack(input.nextInt());
+        System.out.println("Input the lower edge of the range:");
+        int lowerEdge = input.nextInt();
+        System.out.println("Input the top edge of the range:");
+        int topEdge = input.nextInt();
 
-        stack.randPush(1,20);
+        stack.randPush(lowerEdge,topEdge);
 
         stack.printStack(stack.stackArray);
         System.out.println();
