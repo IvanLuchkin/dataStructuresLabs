@@ -16,6 +16,7 @@ public class PriorityQueue {
         if (front == null) {
             front = new QueuePriorityItem(data, priority);
             back = front;
+            return;
         }
 
         QueuePriorityItem curr = front;
@@ -45,15 +46,7 @@ public class PriorityQueue {
         } else {
             size--;
             QueuePriorityItem tempItem = front;
-            QueuePriorityItem next = front.getNext();
-            front.setNext(null);
-            front = next;
-            if (next == null) {
-                back = null;
-                return front;
-            }
-
-            front.setPrev(null);
+            front = front.getNext();
             return tempItem;
         }
     }
@@ -100,7 +93,7 @@ public class PriorityQueue {
     }
 
     public void randomFill(int n) {
-        for (int i = 0; i < n - 1; i++) {
+        for (int i = 0; i < n; i++) {
             this.push((int)(Math.random() * 100), (int)(Math.random() * 50));
         }
     }
@@ -110,12 +103,12 @@ public class PriorityQueue {
         QueuePriorityItem item = front;
 
         while (item != back) {
-            str += item.getData() + ", ";
+            str += item.getData() + ":" + item.getPriority() + ", ";
             item = item.getNext();
         }
 
         if (item != null) {
-            str += item.getData();
+            str += item.getData() + ":" + item.getPriority();
         }
 
         str += "]";
