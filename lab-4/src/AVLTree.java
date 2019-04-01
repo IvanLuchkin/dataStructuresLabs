@@ -350,15 +350,21 @@ public class AVLTree {
         return t;
     }
 
-    private static void cut(int numTrees) {
+    private static AVLTree cut(int numTrees) {
+
         for (Integer val : allValues) {
             int counter = 0;
             for (int i = 0; i < allValues.size(); i++) {
                 if (allValues.get(i).equals(val)) counter++;
             }
             if (counter != numTrees) allValuesNoDuplicates.remove(val);
-        }
 
+        }
+        AVLTree resultTree = new AVLTree();
+        for (Integer val : allValuesNoDuplicates) {
+            resultTree.root = resultTree.insert(resultTree.root, val);
+        }
+        return resultTree;
     }
 
     public static void main(String...args) {
@@ -377,11 +383,10 @@ public class AVLTree {
         System.out.println();
         System.out.println(allValues.toString());
         System.out.println(allValuesNoDuplicates.toString());
+
         cut(numTrees);
-        AVLTree resultTree = new AVLTree();
-        for (Integer val : allValuesNoDuplicates) {
-            resultTree.root = resultTree.insert(resultTree.root, val);
-        }
+
+        AVLTree resultTree = cut(numTrees);
         resultTree.print(resultTree.root);
     }
 }
