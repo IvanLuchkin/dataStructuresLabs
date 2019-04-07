@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class AVLTree {
-    static ArrayList<Integer> allValuesNoDuplicates = new ArrayList<>();
+    static ArrayList<Integer> allUniqueValues = new ArrayList<>();
     static ArrayList<Integer> allValues = new ArrayList<>();
     ArrayList<Integer> valueList = new ArrayList<>();
     Node root;
@@ -111,11 +111,26 @@ public class AVLTree {
         return height(N.left) - height(N.right);
     }
 
-    public void preOrder(Node root) {
+    public void inorder(Node root) {
         if (root != null) {
-            preOrder(root.left);
+            inorder(root.left);
             if (!this.valueList.contains(root.value)) valueList.add(root.value);
-            preOrder(root.right);
+            inorder(root.right);
+        }
+    }
+
+    public void preorder (Node root) {
+        if (root != null) {
+            preorder(root.left);
+            if (!this.valueList.contains(root.value)) valueList.add(root.value);
+            preorder(root.right);
+        }
+    }
+
+    public void postorder(Node root) {
+        if (root != null) {
+            postorder(root.left);
+            postorder(root.right);
         }
     }
 
@@ -302,7 +317,7 @@ public class AVLTree {
     public static AVLTree createRandomTree(int size) {
         AVLTree t = new AVLTree();
         for (int i = 0; i < size; i++) {
-            t.root = t.insert(t.root, (int)(Math.random() * 30));
+            t.root = t.insert(t.root, (int)(Math.random() * 50));
         }
         t.print(t.root);
         return t;
@@ -346,7 +361,7 @@ public class AVLTree {
                 e.printStackTrace();
             }
         }
-        t.preOrder(t.root);
+        t.inorder(t.root);
         return t;
     }
 
@@ -357,11 +372,11 @@ public class AVLTree {
             for (int i = 0; i < allValues.size(); i++) {
                 if (allValues.get(i).equals(val)) counter++;
             }
-            if (counter != numTrees) allValuesNoDuplicates.remove(val);
+            if (counter != numTrees) allUniqueValues.remove(val);
 
         }
         AVLTree resultTree = new AVLTree();
-        for (Integer val : allValuesNoDuplicates) {
+        for (Integer val : allUniqueValues) {
             resultTree.root = resultTree.insert(resultTree.root, val);
         }
         return resultTree;
@@ -376,13 +391,13 @@ public class AVLTree {
             int treeSize = input.nextInt();
             AVLTree tree = createRandomTree(treeSize);
             System.out.println();
-            tree.preOrder(tree.root);
+            tree.inorder(tree.root);
             allValues.addAll(tree.valueList);
         }
-        allValuesNoDuplicates = new ArrayList<Integer>(new LinkedHashSet<Integer>(allValues));
+        allUniqueValues = new ArrayList<Integer>(new LinkedHashSet<Integer>(allValues));
         System.out.println();
         System.out.println(allValues.toString());
-        System.out.println(allValuesNoDuplicates.toString());
+        System.out.println(allUniqueValues.toString());
 
         cut(numTrees);
 
