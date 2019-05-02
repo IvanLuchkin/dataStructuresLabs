@@ -1,3 +1,5 @@
+/******************Huffman Tree And Huffman Algorithm Realisation *********************/
+
 import java.util.PriorityQueue;
 /**
  * Дерево Хаффмана
@@ -17,6 +19,7 @@ public class HuffmanTree implements Comparable<HuffmanTree>{
      * Класс, описывающий объекты узлов.
      */
     private static class Node {
+
         private Integer frequency;
         private Character character;
         private Node leftChild;

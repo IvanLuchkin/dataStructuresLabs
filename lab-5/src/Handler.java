@@ -1,3 +1,5 @@
+/**************************HANDLING CLASS*************************/
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,7 +12,7 @@ public class Handler {
         Scanner input = new Scanner(new FileReader(inputFile));
         String text = input.nextLine();
 
-        int[] charFrequencies = new int[text.length()];
+        int[] charFrequencies = new int[text.length() * 2];
         for (char c : text.toCharArray()) {
             charFrequencies[c]++;
         }
@@ -21,7 +23,7 @@ public class Handler {
         System.out.println("incoded result = " + encoded);
         System.out.printf("size after compression = %d%n", encoded.length());
         String decoded = tree.decode(encoded, tree);
-        System.out.println(decoded);
+        System.out.println("Result of decoding: " + decoded);
 
         tree.printCodes();
         System.out.println("The average leaf depth is : " + tree.sumDepths / tree.uniqueSymbolsCounter);
