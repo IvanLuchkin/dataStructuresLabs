@@ -6,6 +6,7 @@ public class Graph {
 
     private static final int VERTEXMAXCOUNT = 17;
     private Vertex[] vertexList;
+    private ArrayList<Edge> edgeList;
     private int vertexCount;
     private int[][] matrix;
     Queue queue;
@@ -20,6 +21,7 @@ public class Graph {
         }
         vertexCount = 0;
         vertexList = new Vertex[VERTEXMAXCOUNT];
+        edgeList = new ArrayList<>();
 
         queue = new Queue(VERTEXMAXCOUNT);
         stack = new Stack();
@@ -38,6 +40,8 @@ public class Graph {
         matrix[nodePos2][nodePos1] = cost;
         vertexList[nodePos1].addDestination(vertexList[nodePos2], cost);
         vertexList[nodePos2].addDestination(vertexList[nodePos1], cost);
+        edgeList.add(new Edge(vertexList[nodePos1], vertexList[nodePos2], cost));
+        edgeList.add(new Edge(vertexList[nodePos2], vertexList[nodePos1], cost));
     }
 
     void bfs(int v) {
@@ -94,7 +98,49 @@ public class Graph {
 
     }
 
-    int[][] floydWarshall() {
+    void bellmanFord() {
+        int[][] dist = new int[VERTEXMAXCOUNT][VERTEXMAXCOUNT];
+
+        for (int i = 0; i < VERTEXMAXCOUNT; i++) {
+            dist[i] = bellmanFordAlg(this.getVertexList()[i]);
+            System.out.println();
+        }
+
+        for(int i = 0; i < VERTEXMAXCOUNT; i++) {
+            for (int j = 0; j < VERTEXMAXCOUNT; j++) {
+                if (dist[j][i] == 0 && i != j) {
+                    dist[j][i] = dist[i][j];
+                }
+            }
+        }
+        printMatrix(dist);
+        // REFRESHING DISTANCES \\
+        for(Vertex vertex : this.vertexList) {
+            vertex.setDistance(Integer.MAX_VALUE);
+        }
+
+    }
+
+    int[] bellmanFordAlg(Vertex source) {
+        int[] dist = new int[VERTEXMAXCOUNT];
+        source.setDistance(0);
+        for (;;) {
+            boolean statusChange = false;
+            for (Edge edge : edgeList) {
+                if (edge.second.getDistance() > edge.cost + edge.first.getDistance()) {
+                    edge.second.setDistance(edge.cost + edge.first.getDistance());
+                    statusChange = true;
+                }
+            }
+            if (!statusChange) break;
+        }
+        for (int i = 0; i < VERTEXMAXCOUNT; i++) {
+            dist[i] = vertexList[i].getDistance();
+        }
+        return dist;
+    }
+
+    void floydWarshall() {
         int[][] dist = new int [VERTEXMAXCOUNT][VERTEXMAXCOUNT]; // dist[i][j] = минимальное_расстояние(i, j)
         for (int i = 0; i < VERTEXMAXCOUNT; i++) {
             System.arraycopy(this.matrix[i], 0, dist[i], 0, VERTEXMAXCOUNT);
@@ -113,7 +159,7 @@ public class Graph {
                 }
             }
         }
-        return dist;
+        printMatrix(dist);
     }
 
     public static Graph dijkstra(Graph graph, Vertex source) {
@@ -137,6 +183,11 @@ public class Graph {
                 }
             }
             settledVertexes.add(currentVertex);
+        }
+        graph.printDistances();
+        // REFRESHING DISTANCES \\
+        for(Vertex vertex : graph.vertexList) {
+            vertex.setDistance(Integer.MAX_VALUE);
         }
         return graph;
     }
@@ -162,9 +213,20 @@ public class Graph {
         }
     }
 
+    static void printMatrix(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            System.out.println(Arrays.toString(matrix[i]));
+        }
+    }
     void printMatrix() {
         for (int i = 0; i < matrix.length; i++) {
             System.out.println(Arrays.toString(matrix[i]));
         }
+    }
+    void printDistances() {
+        for(Vertex vertex : this.vertexList) {
+            System.out.println(vertex.getLabel() + " : " + vertex.getDistance());
+        }
+        System.out.println();
     }
 }

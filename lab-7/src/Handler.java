@@ -55,17 +55,16 @@ public class Handler {
         //graph.dfs(0);
         //graph.bfs(0);
        // graph.printMatrix();
-       /* graph = Graph.dijkstra(graph, graph.getVertexList()[0]);
 
-        for (int i = 0; i < 16; i++) {
-            Vertex tempVertex = graph.getVertexList()[i];
-            System.out.println(tempVertex.getLabel() + " : " + tempVertex.getDistance());
-        } */
-        graph.printMatrix();
+       // graph = Graph.dijkstra(graph, graph.getVertexList()[0]);
+
+       /* graph.printMatrix();
         int[][] dist = graph.floydWarshall();
         for (int i = 0; i < dist.length; i++) {
             System.out.println(Arrays.toString(dist[i]));
-        }
+        }*/
+
+        graph.bellmanFord();
     }
 
 }
