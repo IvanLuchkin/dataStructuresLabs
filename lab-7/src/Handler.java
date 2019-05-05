@@ -56,7 +56,8 @@ public class Handler {
         //graph.bfs(0);
        // graph.printMatrix();
 
-       // graph = Graph.dijkstra(graph, graph.getVertexList()[0]);
+        graph.dijkstra();
+        graph.bellmanFord();
 
        /* graph.printMatrix();
         int[][] dist = graph.floydWarshall();
@@ -64,7 +65,7 @@ public class Handler {
             System.out.println(Arrays.toString(dist[i]));
         }*/
 
-        graph.bellmanFord();
+
     }
 
 }

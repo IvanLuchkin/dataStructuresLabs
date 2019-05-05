@@ -59,7 +59,7 @@ public class Graph {
                 System.out.println(vertexList[vertex].getLabel());
             }
         }
-
+        // REFRESHING MARKS \\
         for(int j = 0; j < vertexCount; j++) {
             vertexList[j].isVisited = false;
         }
@@ -91,7 +91,7 @@ public class Graph {
                 stack.push(vertex);
             }
         }
-
+        // REFRESHING MARKS \\
         for(int j = 0; j < vertexCount; j++) {
             vertexList[j].setVisited(false);
         }
@@ -162,7 +162,30 @@ public class Graph {
         printMatrix(dist);
     }
 
-    public static Graph dijkstra(Graph graph, Vertex source) {
+    public void dijkstra() {
+        int[][] dist = new int[VERTEXMAXCOUNT][VERTEXMAXCOUNT];
+
+        for (int i = 0; i < VERTEXMAXCOUNT; i++) {
+            dijkstraAlg(this, vertexList[i]);
+            for (int j = 0; j < VERTEXMAXCOUNT; j++) {
+                dist[i][j] = vertexList[j].getDistance();
+            }
+        }
+        for(int i = 0; i < VERTEXMAXCOUNT; i++) {
+            for (int j = 0; j < VERTEXMAXCOUNT; j++) {
+                if (dist[j][i] == 0 && i != j) {
+                    dist[j][i] = dist[i][j];
+                }
+            }
+        }
+        printMatrix(dist);
+        // REFRESHING DISTANCES \\
+        for(Vertex vertex : this.vertexList) {
+            vertex.setDistance(Integer.MAX_VALUE);
+        }
+    }
+
+    public static Graph dijkstraAlg(Graph graph, Vertex source) {
         source.setDistance(0);
 
         Set<Vertex> settledVertexes = new HashSet<>();
@@ -183,11 +206,6 @@ public class Graph {
                 }
             }
             settledVertexes.add(currentVertex);
-        }
-        graph.printDistances();
-        // REFRESHING DISTANCES \\
-        for(Vertex vertex : graph.vertexList) {
-            vertex.setDistance(Integer.MAX_VALUE);
         }
         return graph;
     }
