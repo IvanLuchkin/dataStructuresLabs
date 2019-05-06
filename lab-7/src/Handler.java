@@ -1,10 +1,8 @@
-import java.util.Arrays;
-
 public class Handler {
 
     public static void main(String...args) {
-        Graph graph = new Graph();
-        {
+        //Graph graph = new Graph(17);
+        /*{
             graph.addVertex("v0");
             graph.addVertex("v1");
             graph.addVertex("v2");
@@ -52,19 +50,29 @@ public class Handler {
             graph.addEdge(5, 16, 8);
             graph.addEdge(5, 12, 9);
         }
+
+         */
         //graph.dfs(0);
         //graph.bfs(0);
-       // graph.printMatrix();
+        for (int i = 1000; i <= 20000; i += 1000) {
+            Graph graph = new Graph(i);
+            graph.fillGraph(i, (int)(Math.random() * (i * 10 - i * 3) + i * 3));
 
-        graph.dijkstra();
-        graph.bellmanFord();
+            long startTime1 = System.currentTimeMillis();
+            graph.dijkstra();
+            long timeSpent1 = System.currentTimeMillis() - startTime1;
+            System.out.println("Дэйкстры: " + timeSpent1 + " миллисекунд");
 
-       /* graph.printMatrix();
-        int[][] dist = graph.floydWarshall();
-        for (int i = 0; i < dist.length; i++) {
-            System.out.println(Arrays.toString(dist[i]));
-        }*/
+            long startTime2 = System.currentTimeMillis();
+            graph.bellmanFord();
+            long timeSpent2 = System.currentTimeMillis() - startTime2;
+            System.out.println("Беллмана-Форда: " + timeSpent2 + " миллисекунд");
 
+            long startTime3 = System.currentTimeMillis();
+            graph.floydWarshall();
+            long timeSpent3 = System.currentTimeMillis() - startTime3;
+            System.out.println("Флойда-Уоршелла: " + timeSpent3 + " миллисекунд");
+        }
 
     }
 
