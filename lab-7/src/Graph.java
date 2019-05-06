@@ -4,7 +4,7 @@ import static java.lang.Math.min;
 
 public class Graph {
 
-    private static final int VERTEXMAXCOUNT = 17;
+    private int VERTEXMAXCOUNT = 17;
     private Vertex[] vertexList;
     private ArrayList<Edge> edgeList;
     private int vertexCount;
@@ -12,7 +12,8 @@ public class Graph {
     Queue queue;
     Stack stack;
 
-    public Graph() {
+    public Graph(int vertexAmount) {
+        VERTEXMAXCOUNT = vertexAmount;
         matrix = new int[VERTEXMAXCOUNT][VERTEXMAXCOUNT];
         for(int i = 0; i < VERTEXMAXCOUNT; i++) {
             for (int j = 0; j < VERTEXMAXCOUNT; j++) {
@@ -27,6 +28,19 @@ public class Graph {
         stack = new Stack();
     }
 
+    public void fillGraph(int vertexAmount, int edgeAmount) {
+        for (int i = 0; i < vertexAmount; i++) {
+            this.addVertex("v" + i);
+        }
+        for (int i = 0; i < edgeAmount; i++) {
+            int nodePos1 = (int)(Math.random() * vertexAmount);
+            int nodePos2 = (int)(Math.random() * vertexAmount);
+            if (this.matrix[nodePos1][nodePos2] == 0) {
+                this.addEdge(nodePos1, nodePos2, (int) (Math.random() * 49 + 1));
+            }
+        }
+    }
+
     public Vertex[] getVertexList() {
         return this.vertexList;
     }
@@ -38,8 +52,6 @@ public class Graph {
     public void addEdge(int nodePos1, int nodePos2, int cost) {
         matrix[nodePos1][nodePos2] = cost;
         matrix[nodePos2][nodePos1] = cost;
-        vertexList[nodePos1].addDestination(vertexList[nodePos2], cost);
-        vertexList[nodePos2].addDestination(vertexList[nodePos1], cost);
         edgeList.add(new Edge(vertexList[nodePos1], vertexList[nodePos2], cost));
         edgeList.add(new Edge(vertexList[nodePos2], vertexList[nodePos1], cost));
     }
@@ -76,7 +88,6 @@ public class Graph {
     void dfs(int v){
         vertexList[v].setVisited(true);
         stack.push(v);
-        int i = 0;
         System.out.println(vertexList[v].getLabel());
 
 
@@ -103,17 +114,16 @@ public class Graph {
 
         for (int i = 0; i < VERTEXMAXCOUNT; i++) {
             dist[i] = bellmanFordAlg(this.getVertexList()[i]);
-            System.out.println();
         }
 
-        for(int i = 0; i < VERTEXMAXCOUNT; i++) {
+       /* for(int i = 0; i < VERTEXMAXCOUNT; i++) {
             for (int j = 0; j < VERTEXMAXCOUNT; j++) {
                 if (dist[j][i] == 0 && i != j) {
                     dist[j][i] = dist[i][j];
                 }
             }
-        }
-        printMatrix(dist);
+        } */
+        //printMatrix(dist);
         // REFRESHING DISTANCES \\
         for(Vertex vertex : this.vertexList) {
             vertex.setDistance(Integer.MAX_VALUE);
@@ -159,77 +169,68 @@ public class Graph {
                 }
             }
         }
-        printMatrix(dist);
+        //printMatrix(dist);
     }
 
-    public void dijkstra() {
+    void dijkstra() {
         int[][] dist = new int[VERTEXMAXCOUNT][VERTEXMAXCOUNT];
 
         for (int i = 0; i < VERTEXMAXCOUNT; i++) {
-            dijkstraAlg(this, vertexList[i]);
-            for (int j = 0; j < VERTEXMAXCOUNT; j++) {
-                dist[i][j] = vertexList[j].getDistance();
-            }
+            dist[i] = dijkstraAlg(i);
         }
-        for(int i = 0; i < VERTEXMAXCOUNT; i++) {
+
+        /*for(int i = 0; i < VERTEXMAXCOUNT; i++) {
             for (int j = 0; j < VERTEXMAXCOUNT; j++) {
                 if (dist[j][i] == 0 && i != j) {
                     dist[j][i] = dist[i][j];
                 }
             }
         }
-        printMatrix(dist);
+        //printMatrix(dist);
         // REFRESHING DISTANCES \\
         for(Vertex vertex : this.vertexList) {
             vertex.setDistance(Integer.MAX_VALUE);
         }
+
+         */
+
     }
 
-    public static Graph dijkstraAlg(Graph graph, Vertex source) {
-        source.setDistance(0);
-
-        Set<Vertex> settledVertexes = new HashSet<>();
-        Set<Vertex> unsettledVertexes = new HashSet<>();
-
-        unsettledVertexes.add(source);
-
-        while (unsettledVertexes.size() != 0) {
-            Vertex currentVertex = getLowestDistanceVertex(unsettledVertexes);
-            unsettledVertexes.remove(currentVertex);
-            for (Map.Entry<Vertex, Integer> adjacencyPair:
-                    currentVertex.getAdjacentVertexes().entrySet()) {
-                Vertex adjacentVertex = adjacencyPair.getKey();
-                Integer edgeWeight = adjacencyPair.getValue();
-                if (!settledVertexes.contains(adjacentVertex)) {
-                    calculateMinimumDistance(adjacentVertex, edgeWeight, currentVertex);
-                    unsettledVertexes.add(adjacentVertex);
+    int[] dijkstraAlg (int source) {
+        int INF = Integer.MAX_VALUE;
+        int[][] matrix = this.matrix;
+        for (int i = 0; i < VERTEXMAXCOUNT; i++) {
+            for (int j = 0; j < VERTEXMAXCOUNT; j++) {
+                if (matrix[i][j] == 0) matrix[i][j] = INF;
+            }
+        }
+        int[] dist = new int[VERTEXMAXCOUNT];
+        for (int i = 0; i < VERTEXMAXCOUNT; i++) {
+            dist[i] = INF;
+        }
+        dist[source] = 0;
+        for(;;) {
+            int v = -1;
+            for (int i = 0; i < VERTEXMAXCOUNT; i++) {
+                if (!vertexList[i].isVisited && dist[i] < INF && (v == -1 || dist[v] > dist[i])) {
+                    v = i;
                 }
             }
-            settledVertexes.add(currentVertex);
-        }
-        return graph;
-    }
-    private static Vertex getLowestDistanceVertex(Set <Vertex> unsettledVertexes) {
-        Vertex lowestDistanceVertex = null;
-        int lowestDistance = Integer.MAX_VALUE;
-        for (Vertex vertex : unsettledVertexes) {
-            int nodeDistance = vertex.getDistance();
-            if (nodeDistance < lowestDistance) {
-                lowestDistance = nodeDistance;
-                lowestDistanceVertex = vertex;
+            if (v == -1) break;
+            vertexList[v].setVisited(true);
+            for (int i = 0; i < VERTEXMAXCOUNT; i++) {
+                if (!vertexList[i].isVisited && matrix[v][i] < INF) {
+                    dist[i] = min(dist[i], dist[v] + matrix[v][i]);
+                }
             }
         }
-        return lowestDistanceVertex;
-    }
-    private static void calculateMinimumDistance(Vertex evaluationNode, Integer edgeWeigh, Vertex sourceNode) {
-        Integer sourceDistance = sourceNode.getDistance();
-        if (sourceDistance + edgeWeigh < evaluationNode.getDistance()) {
-            evaluationNode.setDistance(sourceDistance + edgeWeigh);
-            LinkedList<Vertex> shortestPath = new LinkedList<>(sourceNode.getShortestPath());
-            shortestPath.add(sourceNode);
-            evaluationNode.setShortestPath(shortestPath);
+        // REFRESHING MARKS \\
+        for(int j = 0; j < VERTEXMAXCOUNT; j++) {
+            vertexList[j].isVisited = false;
         }
+        return dist;
     }
+
 
     static void printMatrix(int[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
