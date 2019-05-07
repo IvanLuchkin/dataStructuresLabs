@@ -1,8 +1,8 @@
 public class Handler {
 
     public static void main(String...args) {
-        //Graph graph = new Graph(17);
-        /*{
+        Graph graph = new Graph(17);
+        {
             graph.addVertex("v0");
             graph.addVertex("v1");
             graph.addVertex("v2");
@@ -50,11 +50,13 @@ public class Handler {
             graph.addEdge(5, 16, 8);
             graph.addEdge(5, 12, 9);
         }
+        graph.bellmanFord();
+        System.out.println();
+        graph.dijkstra();
 
-         */
         //graph.dfs(0);
         //graph.bfs(0);
-        for (int i = 1000; i <= 20000; i += 1000) {
+        /*for (int i = 1000; i <= 20000; i += 1000) {
             Graph graph = new Graph(i);
             graph.fillGraph(i, (int)(Math.random() * (i * 10 - i * 3) + i * 3));
 
@@ -72,7 +74,7 @@ public class Handler {
             graph.floydWarshall();
             long timeSpent3 = System.currentTimeMillis() - startTime3;
             System.out.println("Флойда-Уоршелла: " + timeSpent3 + " миллисекунд");
-        }
+        }*/
 
     }
 

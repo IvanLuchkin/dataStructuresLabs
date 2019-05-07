@@ -116,18 +116,14 @@ public class Graph {
             dist[i] = bellmanFordAlg(this.getVertexList()[i]);
         }
 
-       /* for(int i = 0; i < VERTEXMAXCOUNT; i++) {
+        for(int i = 0; i < VERTEXMAXCOUNT; i++) {
             for (int j = 0; j < VERTEXMAXCOUNT; j++) {
                 if (dist[j][i] == 0 && i != j) {
                     dist[j][i] = dist[i][j];
                 }
             }
-        } */
-        //printMatrix(dist);
-        // REFRESHING DISTANCES \\
-        for(Vertex vertex : this.vertexList) {
-            vertex.setDistance(Integer.MAX_VALUE);
         }
+        printMatrix(dist);
 
     }
 
@@ -137,9 +133,11 @@ public class Graph {
         for (;;) {
             boolean statusChange = false;
             for (Edge edge : edgeList) {
-                if (edge.second.getDistance() > edge.cost + edge.first.getDistance()) {
-                    edge.second.setDistance(edge.cost + edge.first.getDistance());
-                    statusChange = true;
+                if (edge.first.getDistance() < Integer.MAX_VALUE) {
+                    if (edge.second.getDistance() > edge.cost + edge.first.getDistance()) {
+                        edge.second.setDistance(edge.cost + edge.first.getDistance());
+                        statusChange = true;
+                    }
                 }
             }
             if (!statusChange) break;
@@ -147,6 +145,12 @@ public class Graph {
         for (int i = 0; i < VERTEXMAXCOUNT; i++) {
             dist[i] = vertexList[i].getDistance();
         }
+
+        // REFRESHING DISTANCES \\
+        for(Vertex vertex : this.vertexList) {
+            vertex.setDistance(Integer.MAX_VALUE);
+        }
+
         return dist;
     }
 
@@ -179,20 +183,17 @@ public class Graph {
             dist[i] = dijkstraAlg(i);
         }
 
-        /*for(int i = 0; i < VERTEXMAXCOUNT; i++) {
+        for(int i = 0; i < VERTEXMAXCOUNT; i++) {
             for (int j = 0; j < VERTEXMAXCOUNT; j++) {
                 if (dist[j][i] == 0 && i != j) {
                     dist[j][i] = dist[i][j];
                 }
             }
         }
-        //printMatrix(dist);
-        // REFRESHING DISTANCES \\
-        for(Vertex vertex : this.vertexList) {
-            vertex.setDistance(Integer.MAX_VALUE);
-        }
+        printMatrix(dist);
 
-         */
+
+
 
     }
 
@@ -227,6 +228,10 @@ public class Graph {
         // REFRESHING MARKS \\
         for(int j = 0; j < VERTEXMAXCOUNT; j++) {
             vertexList[j].isVisited = false;
+        }
+        // REFRESHING DISTANCES \\
+        for(Vertex vertex : this.vertexList) {
+            vertex.setDistance(Integer.MAX_VALUE);
         }
         return dist;
     }

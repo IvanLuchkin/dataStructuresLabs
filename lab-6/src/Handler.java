@@ -19,7 +19,7 @@ public class Handler {
                 tempRBTree.add(tempValue);
                 tempAVLTree.insert(tempValue);
             }
-            System.out.println(findMax(tempRBTree.rotationCounters) + " : " + findMax(tempAVLTree.rotationCounters));
+            System.out.println(findMax(tempRBTree.rotationCounters) + " RBTree : AVLTree " + findMax(tempAVLTree.rotationCounters));
         }
     }
 

@@ -2,54 +2,27 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/**
- * Класс реализующий красно-черное дерево на основе 
- * интерфейса {@link IRedBlackTree}
- * @author simonenko
- * @version 2.0
- */
 public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, Iterable<T>, Iterator<T> {
     public ArrayList<Integer> rotationCounters = new ArrayList<>();
 
-    public int tempval;
-    /**
-     * Перечисление цветов узла дерева.
-     */
     enum NodeColor {
         RED,
         BLACK,
         NONE
     }
 
-    /**
-     * Класс реализующий узел дерева.
-     */
     public class Node {
 
-        /**
-         * Значение узла дерева.
-         */
         private T _value;
-        /**
-         * Цвет узла.
-         */
+
         private NodeColor _color;
-        /**
-         * Родительский узел.
-         */
+
         private Node _parent;
-        /**
-         * Левый дочерниый узел.
-         */
+
         private Node _left;
-        /**
-         * Правый дочерний узел.
-         */
+
         private Node _right;
 
-        /**
-         * Конструктор по-умолчанию.
-         */
         public Node() {
             _value = null;
             _color = NodeColor.NONE;
@@ -58,12 +31,6 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
             _right = null;
         }
 
-        /**
-         * Конструктор с параметрами, позволящими задать цвет и
-         * значение узла.
-         * @param value - значение, которое будет сохранено в узле.
-         * @param color - цвет узла.
-         */
         public Node(T value, NodeColor color) {
             _value = value;
             _color = color;
@@ -72,10 +39,6 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
             _right = _nil;
         }
 
-        /**
-         * Конструктор копий.
-         * @param node - другой узел.
-         */
         public Node(Node node) {
             _value = node._value;
             _color = node._color;
@@ -158,18 +121,12 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
             _color = color;
         }
 
-        /**
-         * Возвращет "дедушку" узла дерева.
-         */
         public Node getGrandfather() {
             if(_parent != null && _parent != _nil)
                 return _parent._parent;
             return null;
         }
 
-        /**
-         * Возвращает "дядю" узла дерева.
-         */
         public Node getUncle() {
             Node grand = getGrandfather();
             if(grand != null)
@@ -182,9 +139,6 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
             return null;
         }
 
-        /**
-         * Возвращает следующий по значению узел дерева.
-         */
         public Node getSuccessor()
         {
             Node temp = null;
@@ -209,29 +163,14 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
 
     }
 
-    /**
-     * Корень дерева.
-     */
     private Node _root;
-    /**
-     * Ограничитель, который обозначает нулевую ссылку.
-     */
+
     private Node _nil;
 
-    /**
-     * Ссылка на элемент на который указывает итератор.
-     */
     private Node _current;
 
-    /**
-     * Флаг удаления элемента через итератор, необходимый для того, чтобы
-     * корректно работали {@link Iterator#hasNext()} и {@link Iterator#next()}
-     */
     private boolean _isRemoved;
 
-    /**
-     * Конструктор по-умолчанию.
-     */
     public RedBlackTree() {
         _root = new Node();
         _nil = new Node();
@@ -242,11 +181,6 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
         _isRemoved = false;
     }
 
-    /**
-     * Статический метод, осуществляюший левый поворот дерева tree относительно узла node.
-     * @param tree - дерево.
-     * @param node - узел, относительно которого осущетвляется левый поворот.
-     */
     private static <T extends Comparable<T>> void leftRotate(RedBlackTree<T> tree, RedBlackTree<T>.Node node) {
         RedBlackTree<T>.Node nodeParent = node.getParent();
         RedBlackTree<T>.Node nodeRight = node.getRight();
@@ -264,11 +198,6 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
         nodeRight.setLeft(node);
     }
 
-    /**
-     * Статический метод, осуществляюший правый поворот дерева tree относительно узла node.
-     * @param tree - дерево.
-     * @param node - узел, относительно которого осущетвляется правый поворот.
-     */
     private static <T extends Comparable<T>> void rightRotate(RedBlackTree<T> tree, RedBlackTree<T>.Node node) {
         RedBlackTree<T>.Node nodeParent = node.getParent();
         RedBlackTree<T>.Node nodeLeft = node.getLeft();
@@ -286,21 +215,12 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
         nodeLeft.setRight(node);
     }
 
-    /**
-     * Печать дерева.
-     * @param tree - дерево.
-     */
     public static <T extends Comparable<T>> void printTree(RedBlackTree<T> tree) {
         ArrayList<RedBlackTree<T>.Node> nodes = new ArrayList<RedBlackTree<T>.Node>();
         nodes.add(0, tree._root);
         printNodes(tree, nodes);
     }
 
-    /**
-     * Печать информации об узле дерева.
-     * @param tree - ссылка на дерево.
-     * @param nodes - список узлов на уровне дерева.
-     */
     private static <T extends Comparable<T>> void printNodes(RedBlackTree<T> tree, ArrayList<RedBlackTree<T>.Node> nodes) {
         int childsCounter = 0;
         int nodesAmount = nodes.size();
@@ -332,12 +252,6 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
             printNodes(tree, childs);
     }
 
-    /**
-     * Реализация метода добавления элемента дарева. На основе добавляемого значения
-     * создается узел дерева типа {@link Node} красного цвета.
-     * @param o - значение типа {@link Comparable} для вставки в дерево.
-     */
-
     public int add(T o) {
         Node node = _root, temp = _nil;
         Node newNode = new Node((T)o, NodeColor.RED);
@@ -363,10 +277,6 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
         return t;
     }
 
-    /**
-     * Исправление древа для сохранения свойств красно-черного дерева.
-     * @param node - добавленный узел.
-     */
     private int fixInsert(Node node) {
         int rotationCounter = 0;
         Node temp;
@@ -416,20 +326,11 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
         return rotationCounter;
     }
 
-    /**
-     * Реализация удаления элемента дерева.
-     * @param o - значение типа {@link Comparable} для удаления из дерева.
-     * @return true - если элемент был удален;
-     * false - если элемента в дереве нет и удаление его невозможно.
-     */
     @Override
     public boolean remove(T o) {
         return remove(findNode(o));
     }
 
-    /**
-     *
-     */
     private boolean remove(Node node)
     {
         Node temp = _nil, successor = _nil;
@@ -463,12 +364,6 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
         return true;
     }
 
-    /**
-     * Исправляет дерево после удаления элемента для сохранения
-     * красно-черных свойств дерева.
-     * @param node - значение относительно которого необходимо производить
-     * исправление дерева.
-     */
     private void fixRemove(Node node)
     {
         Node temp;
@@ -529,21 +424,11 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
         node.makeBlack();
     }
 
-    /**
-     * Реализует функцию проверки на содержание элемента в дереве.
-     * @param o - значение типа {@link Comparable} для поиска в дерева.
-     * @return true - если элемент найден; false - если элемент не найда.
-     */
     @Override
     public boolean contains(T o) {
         return (findNode(o) != _nil);
     }
 
-    /**
-     * Поиск узла дерева со значением o.
-     * @param o - значение типа {@link Comparable} для поиска в дерева.
-     * @return узел дерева; если не найден - возвращает
-     */
     private Node findNode(T o) {
         Node node = _root;
         while(node != null && node != _nil && node.getValue().compareTo(o) != 0) {
@@ -555,10 +440,6 @@ public class RedBlackTree<T extends Comparable<T>> implements IRedBlackTree<T>, 
         return node;
     }
 
-    /**
-     * Метод для получения первого(наименьшего) элемента структуры.
-     * @return наименьший элемент дерева
-     */
     private Node first()
     {
         Node node = _root;
