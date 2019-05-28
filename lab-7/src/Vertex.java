@@ -2,7 +2,7 @@ public class Vertex {
 
     private String label;
     public boolean isVisited;
-    private Integer distance = Integer.MAX_VALUE;
+    private Integer distance = Integer.MAX_VALUE / 2;
 
     public Vertex(String label) {
         this.label = label;

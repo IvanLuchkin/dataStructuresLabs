@@ -17,7 +17,7 @@ public class Graph {
         matrix = new int[VERTEXMAXCOUNT][VERTEXMAXCOUNT];
         for(int i = 0; i < VERTEXMAXCOUNT; i++) {
             for (int j = 0; j < VERTEXMAXCOUNT; j++) {
-                matrix[i][j] = 0;
+                matrix[i][j] = Integer.MAX_VALUE / 2;
             }
         }
         vertexCount = 0;
@@ -123,7 +123,8 @@ public class Graph {
                 }
             }
         }
-        printMatrix(dist);
+
+        //printMatrix(dist);
 
     }
 
@@ -145,10 +146,11 @@ public class Graph {
         for (int i = 0; i < VERTEXMAXCOUNT; i++) {
             dist[i] = vertexList[i].getDistance();
         }
-
+        System.out.println("From " + source.getLabel());
+        printDistances();
         // REFRESHING DISTANCES \\
         for(Vertex vertex : this.vertexList) {
-            vertex.setDistance(Integer.MAX_VALUE);
+            vertex.setDistance(Integer.MAX_VALUE / 2);
         }
 
         return dist;
@@ -162,7 +164,7 @@ public class Graph {
 
         for (int i = 0; i < VERTEXMAXCOUNT; i++) {
             for (int j = 0; j < VERTEXMAXCOUNT; j++) {
-                if (dist[i][j] == 0) dist[i][j] = Integer.MAX_VALUE / 2;
+                if (i == j) dist[i][j] = 0;
             }
         }
 
@@ -173,6 +175,7 @@ public class Graph {
                 }
             }
         }
+
         //printMatrix(dist);
     }
 
@@ -190,10 +193,8 @@ public class Graph {
                 }
             }
         }
-        printMatrix(dist);
 
-
-
+        //printMatrix(dist);
 
     }
 
@@ -221,17 +222,19 @@ public class Graph {
             vertexList[v].setVisited(true);
             for (int i = 0; i < VERTEXMAXCOUNT; i++) {
                 if (!vertexList[i].isVisited && matrix[v][i] < INF) {
-                    dist[i] = min(dist[i], dist[v] + matrix[v][i]);
+                    vertexList[i].setDistance(dist[i] = min(dist[i], dist[v] + matrix[v][i]));
                 }
             }
         }
+        System.out.println("From " + vertexList[source].getLabel());
+        printDistances();
         // REFRESHING MARKS \\
         for(int j = 0; j < VERTEXMAXCOUNT; j++) {
             vertexList[j].isVisited = false;
         }
         // REFRESHING DISTANCES \\
         for(Vertex vertex : this.vertexList) {
-            vertex.setDistance(Integer.MAX_VALUE);
+            vertex.setDistance(Integer.MAX_VALUE / 2);
         }
         return dist;
     }
@@ -244,7 +247,11 @@ public class Graph {
     }
     void printMatrix() {
         for (int i = 0; i < matrix.length; i++) {
-            System.out.println(Arrays.toString(matrix[i]));
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] > 100) matrix[i][j] = 0;
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
         }
     }
     void printDistances() {

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Handler {
 
     public static void main(String...args) {
@@ -50,13 +52,31 @@ public class Handler {
             graph.addEdge(5, 16, 8);
             graph.addEdge(5, 12, 9);
         }
+        graph.printMatrix();
+        graph.dijkstra();
+        System.out.println();
+        graph.floydWarshall();
+        System.out.println();
+        graph.bellmanFord();
+        /*
+
+        graph.printMatrix();
         graph.bellmanFord();
         System.out.println();
         graph.dijkstra();
+        System.out.println();
+        graph.floydWarshall();
+        for (int i = 0; i < graph.getVertexList().length; i++) {
+            graph.dfs(i);
+            System.out.println();
+        }
+        for (int i = 0; i < graph.getVertexList().length; i++) {
+            graph.bfs(i);
+            System.out.println();
+        }
 
-        //graph.dfs(0);
-        //graph.bfs(0);
-        /*for (int i = 1000; i <= 20000; i += 1000) {
+
+        for (int i = 1000; i <= 20000; i += 1000) {
             Graph graph = new Graph(i);
             graph.fillGraph(i, (int)(Math.random() * (i * 10 - i * 3) + i * 3));
 
@@ -74,7 +94,9 @@ public class Handler {
             graph.floydWarshall();
             long timeSpent3 = System.currentTimeMillis() - startTime3;
             System.out.println("Флойда-Уоршелла: " + timeSpent3 + " миллисекунд");
-        }*/
+        }
+
+         */
 
     }
 
